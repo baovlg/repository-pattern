@@ -23,7 +23,7 @@ export class AuthController {
 
   @Get()
   findAll() {
-    // return this.userService.findAll();
+    return this.authService.findAll();
   }
 
   @Get(':id')

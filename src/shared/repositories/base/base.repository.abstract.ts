@@ -47,4 +47,7 @@ export class BaseAbstractRepository<T extends HasId>
   preload(entityLike: DeepPartial<T>): Promise<T> {
     return this.repository.preload(entityLike);
   }
+  hasId(id: any): boolean {
+    return this.repository.hasId(id);
+  }
 }

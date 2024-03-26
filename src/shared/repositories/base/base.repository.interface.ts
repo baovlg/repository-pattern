@@ -11,4 +11,5 @@ export interface BaseRepositoryInterface<T> {
   findWithRelations(relations: FindManyOptions<T>): Promise<T[]>;
   remove(data: T): Promise<T>;
   preload(entityLike: DeepPartial<T>): Promise<T>;
+  hasId(id: number): boolean;
 }

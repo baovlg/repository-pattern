@@ -1,13 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
-import {
-  UserRepository,
-  UserRepositoryInterface,
-} from 'src/shared/repositories';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { UserRepositoryInterface } from 'src/shared/repositories';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from 'src/shared/entities';
-import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
@@ -16,7 +10,7 @@ export class UserService {
     private readonly userRepository: UserRepositoryInterface,
   ) {}
   create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+    return this.userRepository.create(createUserDto);
   }
 
   findAll() {
@@ -24,14 +18,24 @@ export class UserService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} user`;
+    return this.userRepository.findOneById(id);
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    if (!this.userRepository.hasId(id)) {
+      throw new NotFoundException();
+    }
+
+    const user = await this.userRepository.findOneById(id);
+    return this.userRepository.save(Object.assign(user, updateUserDto));
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    if (!this.userRepository.hasId(id)) {
+      throw new NotFoundException();
+    }
+
+    const user = await this.userRepository.findOneById(id);
+    return this.userRepository.remove(user);
   }
 }
