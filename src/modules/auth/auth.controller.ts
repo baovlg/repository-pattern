@@ -12,12 +12,9 @@ import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { UserService } from '../user/user.service';
 
-@Controller('auth')
+@Controller('auths')
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly userService: UserService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Post()
   create(@Body() createAuthDto: CreateAuthDto) {
@@ -26,7 +23,7 @@ export class AuthController {
 
   @Get()
   findAll() {
-    return this.userService.findAll();
+    // return this.userService.findAll();
   }
 
   @Get(':id')

@@ -1,6 +1,6 @@
 import { DeepPartial, FindManyOptions, FindOneOptions } from 'typeorm';
 
-export interface BaseInterfaceRepository<T> {
+export interface BaseRepositoryInterface<T> {
   create(data: DeepPartial<T>): T;
   createMany(data: DeepPartial<T>[]): T[];
   save(data: DeepPartial<T>): Promise<T>;

@@ -5,14 +5,14 @@ import {
   Repository,
   FindOptionsWhere,
 } from 'typeorm';
-import { BaseInterfaceRepository } from './base.interface.repository';
+import { BaseRepositoryInterface } from './base.repository.interface';
 
 interface HasId {
   id: number;
 }
 
 export class BaseAbstractRepository<T extends HasId>
-  implements BaseInterfaceRepository<T>
+  implements BaseRepositoryInterface<T>
 {
   constructor(private readonly repository: Repository<T>) {}
 
